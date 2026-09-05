@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1e1b4b" />
+
+    <title>Palestras e Debates</title>
+    <meta name="description" content="Plataforma de palestras e debates" />
+
+    <meta property="og:title" content="Palestras e Debates" />
+    <meta property="og:description" content="Plataforma de palestras e debates" />
+    <meta property="og:type" content="website" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <script>
+      // Aplica o tema antes do React montar (evita flash de cor errada).
+      (function () {
+        var theme = localStorage.getItem('ped-theme') || 'dark'
+        if (theme !== 'light') document.documentElement.classList.add(theme)
+      })()
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
