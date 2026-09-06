@@ -8,7 +8,7 @@ import { CATEGORIAS_PALESTRAS, PALESTRAS_ESPECIAIS } from '@/data/content'
 const PalestrasPage = () => {
   return (
     <>
-      <PageHero title="Nossas Palestras" bg="/img/palestras/005.jpg" />
+      <PageHero title="Nossas Palestras" bg="/img/fundopalestras.jpg" />
 
       <section className="py-14">
         <div className="container max-w-4xl text-center">

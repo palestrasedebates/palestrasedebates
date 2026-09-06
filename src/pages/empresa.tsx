@@ -23,7 +23,7 @@ const VMV = [
 const EmpresaPage = () => {
   return (
     <>
-      <PageHero title="Nossa Empresa" bg="/img/palestras/016.jpg" />
+      <PageHero title="Nossa Empresa" bg="/img/fundoempresa.jpg" />
 
       <section className="py-16">
         <div className="container max-w-4xl">

@@ -53,7 +53,7 @@ const ContatoPage = () => {
 
   return (
     <>
-      <PageHero title="Fale connosco" bg="/img/palestras/006.jpg" />
+      <PageHero title="Fale connosco" bg="/img/fundocontato.jpg" />
 
       <section className="py-14">
         <div className="container max-w-3xl text-center">
