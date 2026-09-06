@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Carousel } from '@/components/carousel'
+import { openDrWilson } from '@/components/dr-wilson'
 import { SITE } from '@/lib/site'
 import { HERO_SLIDES, SERVICOS, PALESTRAS_DESTAQUE, CATEGORIAS } from '@/data/content'
 
@@ -93,9 +94,9 @@ const HomePage = () => {
               atuação global.
             </p>
           </div>
-          <a href="https://www.drwilson.pt" target="_blank" rel="noreferrer" className="btn-cta shrink-0">
-            Acesse agora!
-          </a>
+          <button type="button" onClick={openDrWilson} className="btn-cta shrink-0">
+            Falar agora!
+          </button>
         </div>
       </section>
 

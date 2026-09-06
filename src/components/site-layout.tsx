@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { WhatsAppFab } from '@/components/whatsapp-fab'
+import { DrWilsonLoader } from '@/components/dr-wilson'
 
 export const SiteLayout = () => {
   const { pathname, hash } = useLocation()
@@ -27,6 +28,7 @@ export const SiteLayout = () => {
       </main>
       <SiteFooter />
       <WhatsAppFab />
+      <DrWilsonLoader />
     </div>
   )
 }

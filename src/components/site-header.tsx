@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Menu, X, Phone } from 'lucide-react'
+import { Menu, X, Phone, Stethoscope } from 'lucide-react'
 import { InstagramIcon, FacebookIcon } from '@/components/social-icons'
+import { openDrWilson } from '@/components/dr-wilson'
 import { NAV, SITE } from '@/lib/site'
 import { cn } from '@/lib/utils'
 
@@ -48,7 +49,15 @@ export const SiteHeader = () => {
               {item.label}
             </NavLink>
           ))}
-          <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="btn-cta ml-2">
+          <button
+            type="button"
+            onClick={openDrWilson}
+            className="ml-2 inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-sm ring-2 ring-accent/30 transition hover:brightness-95"
+          >
+            <Stethoscope className="size-4" />
+            Dr. Wilson
+          </button>
+          <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="btn-primary ml-2">
             Orçamento
           </a>
         </nav>
@@ -77,7 +86,18 @@ export const SiteHeader = () => {
                 {item.label}
               </NavLink>
             ))}
-            <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="btn-cta mt-3">
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false)
+                openDrWilson()
+              }}
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-4 py-3 text-sm font-bold uppercase tracking-wide text-white"
+            >
+              <Stethoscope className="size-4" />
+              Falar com o Dr. Wilson
+            </button>
+            <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="btn-primary mt-2">
               Orçamento
             </a>
           </div>
