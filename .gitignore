@@ -31,3 +31,6 @@ dist-ssr
 .supabase
 supabase/.temp
 .vercel
+
+# Segredos locais
+.supabase-db-password.txt
