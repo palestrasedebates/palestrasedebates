@@ -52,12 +52,12 @@ export const SiteHeader = () => {
           <button
             type="button"
             onClick={openDrWilson}
-            className="ml-2 inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-sm ring-2 ring-accent/30 transition hover:brightness-95"
+            className="ml-2 inline-flex items-center gap-2 rounded-full bg-[#186979] px-4 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-sm ring-2 ring-[#2c98b0]/40 transition hover:bg-[#12525f]"
           >
             <Stethoscope className="size-4" />
             Dr. Wilson
           </button>
-          <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="btn-primary ml-2">
+          <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="btn-cta ml-2">
             Orçamento
           </a>
         </nav>
@@ -92,12 +92,12 @@ export const SiteHeader = () => {
                 setOpen(false)
                 openDrWilson()
               }}
-              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-4 py-3 text-sm font-bold uppercase tracking-wide text-white"
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-[#186979] px-4 py-3 text-sm font-bold uppercase tracking-wide text-white"
             >
               <Stethoscope className="size-4" />
               Falar com o Dr. Wilson
             </button>
-            <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="btn-primary mt-2">
+            <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="btn-cta mt-2">
               Orçamento
             </a>
           </div>

@@ -84,8 +84,19 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Dr. Wilson AI */}
-      <section className="bg-primary py-14 text-white">
+      {/* Dr. Wilson AI — banner inteiro clicável (abre o chat) */}
+      <section
+        role="button"
+        tabIndex={0}
+        onClick={openDrWilson}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            openDrWilson()
+          }
+        }}
+        className="cursor-pointer bg-primary py-14 text-white outline-none transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-accent"
+      >
         <div className="container flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
           <img src="/img/logodrwilsonpeq.png" alt="Dr. Wilson AI" className="h-24 w-auto" />
           <div className="flex-1">
@@ -94,9 +105,7 @@ const HomePage = () => {
               atuação global.
             </p>
           </div>
-          <button type="button" onClick={openDrWilson} className="btn-cta shrink-0">
-            Falar agora!
-          </button>
+          <span className="btn-cta shrink-0">Falar agora!</span>
         </div>
       </section>
 
