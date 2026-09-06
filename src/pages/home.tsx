@@ -180,6 +180,37 @@ const HomePage = () => {
           <img src="/img/mapa.jpg" alt="Nossa presença" className="mx-auto max-h-[420px] w-auto rounded-lg" />
         </div>
       </section>
+
+      {/* Projeto cofinanciado pelo PRR — obrigatório pelas regras de financiamento */}
+      <section className="border-t bg-white py-14">
+        <div className="container max-w-3xl text-center">
+          <img src="/img/logoppr.png" alt="Recuperar Portugal — PRR" className="mx-auto h-12 w-auto sm:h-14" />
+          <h3 className="mt-6 text-xl font-extrabold uppercase text-primary sm:text-2xl">
+            Projeto Cofinanciado pelo PRR
+          </h3>
+          <p className="mx-auto mt-4 max-w-2xl leading-relaxed text-muted-foreground">
+            A Palestras e Debates, Lda. desenvolve o presente projeto no âmbito do Plano de
+            Recuperação e Resiliência (PRR), com o objetivo de reforçar a sua capacidade operacional
+            e tecnológica na Região Autónoma dos Açores. O projeto é financiado pela União Europeia
+            – NextGenerationEU.
+          </p>
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a href="https://recuperarportugal.gov.pt" target="_blank" rel="noreferrer" className="btn-primary">
+              Mais informações aqui!
+            </a>
+            <a href="/fichadoprojeto.pdf" target="_blank" rel="noreferrer" className="btn-cta">
+              Ficha do projeto
+            </a>
+          </div>
+        </div>
+        <div className="mt-10 border-t pt-8">
+          <img
+            src="/img/logogov.jpg"
+            alt="PRR · Governo dos Açores · República Portuguesa · Financiado pela União Europeia — NextGenerationEU"
+            className="mx-auto w-full max-w-3xl px-4"
+          />
+        </div>
+      </section>
     </>
   )
 }
