@@ -71,3 +71,11 @@
     @apply text-2xl font-extrabold uppercase tracking-tight text-primary sm:text-3xl;
   }
 }
+
+/* Dr. Wilson (InBot): sem balão flutuante fixo — o chat abre só pelo botão
+   do menu / banner. O launcher continua no DOM (clicado por JS para abrir),
+   apenas oculto visualmente. */
+#bot_icon,
+#bot_icon_pointer {
+  display: none !important;
+}
