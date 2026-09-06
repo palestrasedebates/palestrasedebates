@@ -72,11 +72,14 @@ const HomePage = () => {
           <h3 className="section-title mb-10 text-center">Nossos serviços</h3>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {SERVICOS.map((s) => (
-              <article key={s.title} className="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-border">
-                <img src={s.img} alt={s.title} className="h-44 w-full object-cover" />
-                <div className="p-5">
-                  <h4 className="mb-2 text-lg font-extrabold uppercase text-primary">{s.title}</h4>
+              <article key={s.title} className="flex flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-border">
+                {/* O título de cada serviço já vem "queimado" na imagem (faixa azul),
+                    por isso a exibimos em proporção natural (sem object-cover) para
+                    não cortar a segunda linha do título. */}
+                <img src={s.img} alt={s.title} className="w-full" />
+                <div className="flex flex-1 flex-col p-5">
                   <p className="text-sm leading-relaxed text-muted-foreground">{s.text}</p>
+                  <Link to="/contato" className="btn-primary mt-4 w-full">Solicite orçamento</Link>
                 </div>
               </article>
             ))}
