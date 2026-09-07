@@ -83,7 +83,7 @@ const HomePage = () => {
             </h3>
             <p className="mt-3 max-w-2xl leading-relaxed text-primary/80">
               Responda a 6 perguntas rápidas e receba um plano de 12 meses à medida dos riscos e
-              prioridades da sua equipa — sem compromisso.
+              prioridades da sua equipa, sem compromisso.
             </p>
           </div>
           <span className="btn-primary shrink-0">Fazer diagnóstico gratuito</span>
@@ -122,12 +122,12 @@ const HomePage = () => {
             openDrWilson()
           }
         }}
-        className="cursor-pointer bg-primary py-14 text-white outline-none transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-accent"
+        className="cursor-pointer bg-[#cbd0d6] py-14 text-primary outline-none transition hover:brightness-95 focus-visible:ring-2 focus-visible:ring-primary"
       >
         <div className="container flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
           <img src="/img/logodrwilsonpeq.png" alt="Dr. Wilson AI" className="h-24 w-auto max-w-full object-contain" />
           <div className="flex-1">
-            <p className="text-lg font-semibold">
+            <p className="text-lg font-semibold text-primary">
               Fale comigo. Sou o Dr. Wilson AI, a primeira inteligência artificial de saúde com
               atuação global.
             </p>

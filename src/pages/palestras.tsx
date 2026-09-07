@@ -74,7 +74,7 @@ const PalestrasPage = () => {
             Palestras especiais
           </h2>
           <p className="mx-auto mb-10 max-w-2xl text-center text-white/80">
-            Disponibilizamos também os seguintes formatos e abordagens — soluções rápidas, inclusive
+            Disponibilizamos também os seguintes formatos e abordagens: soluções rápidas, inclusive
             com tecnologia para promover interatividade entre os participantes.
           </p>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

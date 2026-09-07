@@ -91,8 +91,8 @@ export async function lerLinhasAdmin(): Promise<LinhaAdmin[] | null> {
     return {
       planId: r.id as string,
       data: (r.created_at as string) ?? null,
-      empresa: (dg.company_name as string) || '—',
-      setor: (dg.sector as string) || '—',
+      empresa: (dg.company_name as string) || 'n/d',
+      setor: (dg.sector as string) || 'n/d',
       headcount_band: dg.headcount_band as Diagnostico['headcount_band'],
       priority: dg.priority as Diagnostico['priority'],
       valor: Number(r.estimated_value ?? 0),
