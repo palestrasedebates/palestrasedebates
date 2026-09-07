@@ -122,9 +122,10 @@ const AppPortalPage = () => {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-secondary">
+    // Desktop: ocupa a tela e não rola a página (só as colunas rolam). Mobile: empilha e rola.
+    <div className="flex min-h-screen flex-col bg-secondary lg:h-screen lg:min-h-0 lg:overflow-hidden">
       {/* Barra de produto */}
-      <header className="flex items-center justify-between border-b border-input bg-white px-6 py-3">
+      <header className="flex shrink-0 items-center justify-between border-b border-input bg-white px-6 py-3">
         <div className="flex items-center gap-2">
           <img src="/img/logo.png" alt="Palestras e Debates" className="h-8 w-auto" />
           <span className="text-sm font-semibold text-primary">Portal do cliente</span>
@@ -142,13 +143,13 @@ const AppPortalPage = () => {
           </div>
         </div>
       ) : (
-        <div className="grid flex-1 gap-0 lg:grid-cols-[1.3fr_1fr]">
-          {/* Coluna esquerda — plano editável */}
-          <div className="overflow-y-auto border-r border-input p-6">
+        <div className="grid flex-1 gap-0 lg:min-h-0 lg:grid-cols-[1.3fr_1fr] lg:overflow-hidden">
+          {/* Coluna esquerda — plano editável (rola só ela no desktop) */}
+          <div className="border-r border-input p-6 lg:min-h-0 lg:overflow-y-auto">
             <PlanoEditavel plano={plano} empresa={diagnostico.company_name} onChange={atualizarPlano} />
           </div>
-          {/* Coluna direita — consultor IA */}
-          <div className="flex flex-col bg-white">
+          {/* Coluna direita — consultor IA (altura de tela, input sempre visível) */}
+          <div className="flex h-[80vh] min-h-0 flex-col bg-white lg:h-full">
             <Consultor diagnostico={diagnostico} plano={plano} onPlanoAtualizado={atualizarPlano} />
           </div>
         </div>
@@ -350,7 +351,7 @@ const Consultor = ({
 
   return (
     <>
-      <div className="flex items-center gap-2 border-b border-input px-5 py-3">
+      <div className="flex shrink-0 items-center gap-2 border-b border-input px-5 py-3">
         <span className="grid size-8 place-items-center rounded-full bg-accent/10 text-accent">
           <Sparkles className="size-4" />
         </span>
@@ -360,7 +361,7 @@ const Consultor = ({
         </div>
       </div>
 
-      <div className="flex-1 space-y-4 overflow-y-auto p-5">
+      <div className="min-h-0 flex-1 space-y-4 overflow-y-auto p-5">
         {msgs.map((m, i) => (
           <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div
@@ -384,7 +385,7 @@ const Consultor = ({
         <div ref={fimRef} />
       </div>
 
-      <div className="border-t border-input p-3">
+      <div className="shrink-0 border-t border-input p-3">
         <div className="flex items-end gap-2">
           <textarea
             value={texto}
