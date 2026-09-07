@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Sparkles } from 'lucide-react'
 import { Carousel } from '@/components/carousel'
 import { openDrWilson } from '@/components/dr-wilson'
 import { SITE } from '@/lib/site'
@@ -65,6 +66,29 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {/* Diagnóstico por IA — banner inteiro clicável (navegação interna via Link) */}
+      <Link
+        to="/diagnostico"
+        className="block bg-accent py-14 text-primary outline-none transition hover:brightness-95 focus-visible:ring-2 focus-visible:ring-primary"
+      >
+        <div className="container flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
+          <span className="grid size-20 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+            <Sparkles className="size-10" />
+          </span>
+          <div className="flex-1">
+            <p className="text-sm font-bold uppercase tracking-widest">Grátis · 2 minutos</p>
+            <h3 className="mt-2 text-xl font-extrabold uppercase leading-tight sm:text-2xl">
+              O plano de formação anual da sua empresa, montado por IA
+            </h3>
+            <p className="mt-3 max-w-2xl leading-relaxed text-primary/80">
+              Responda a 6 perguntas rápidas e receba um plano de 12 meses à medida dos riscos e
+              prioridades da sua equipa — sem compromisso.
+            </p>
+          </div>
+          <span className="btn-primary shrink-0">Fazer diagnóstico gratuito</span>
+        </div>
+      </Link>
 
       {/* Serviços */}
       <section id="servicos" className="scroll-mt-24 bg-secondary py-16">
