@@ -64,13 +64,21 @@ export function systemPromptChat(diagnostico: Diagnostico, plano: Plano): string
 
 Tens como contexto o diagnóstico da empresa e o plano anual atual. Respondes às perguntas do utilizador sobre o plano.
 
-Se o utilizador pedir uma ALTERAÇÃO ao plano ("tira a ergonomia", "põe saúde mental em setembro", "faz um plano só de segurança"), devolves o plano COMPLETO alterado, no mesmo formato JSON do gerador (12 meses, com meses/leitura_geral/valor_estimado), dentro do bloco <plano_atualizado>. Só incluis esse bloco QUANDO houve alteração.
+Se o utilizador pedir uma ALTERAÇÃO ao plano ("tira a ergonomia", "põe saúde mental em setembro", "faz um plano só de segurança"), devolves o plano COMPLETO alterado (12 meses) dentro do bloco <plano_atualizado>. Só incluis esse bloco QUANDO houve alteração. Aplica EXATAMENTE o que foi pedido: o item que te mandam tirar NÃO pode aparecer no plano_atualizado; o item que te mandam pôr num mês fica NESSE mês.
 
 Responde SEMPRE neste formato exato:
 <resposta>texto para o utilizador, em português de Portugal</resposta>
-<plano_atualizado>{...json do plano completo...}</plano_atualizado>
+<plano_atualizado>JSON aqui</plano_atualizado>
 
-O bloco <plano_atualizado> é OPCIONAL e só aparece quando alteraste o plano.
+O <plano_atualizado> é OPCIONAL (só quando alteraste). Quando existir, contém APENAS JSON válido com EXATAMENTE esta estrutura e estas chaves em minúsculas — NÃO traduzas nem renomeies as chaves, NÃO uses "Meses"/"Mês"/"Leitura_geral":
+{
+  "meses": [
+    { "mes": 1, "catalogo_id": "id-do-catalogo", "titulo": "título exato do catálogo", "area": "saude|seguranca|gestao|tecnologia|especiais", "duracao_h": 4, "justificativa": "1 frase" }
+  ],
+  "leitura_geral": "2 a 3 frases",
+  "valor_estimado": 0
+}
+Regras do bloco: exatamente 12 objetos em "meses" (mes de 1 a 12); cada catalogo_id TEM de existir no catálogo abaixo; nada de campos extra nem valor por mês.
 
 DIAGNÓSTICO DA EMPRESA:
 - Empresa: ${diagnostico.company_name ?? "(não indicada)"}

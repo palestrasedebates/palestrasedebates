@@ -93,9 +93,28 @@ async function handlePlan(diagnostico: Diagnostico): Promise<Response> {
     system: systemPromptPlano(),
     prompt: `Diagnóstico da empresa (JSON):\n${JSON.stringify(diagnostico)}`,
     providerOptions: reasoningMinimo,
+    maxOutputTokens: 2500, // 12 meses de JSON estruturado
   });
   const plano = normalizarPlano(object, diagnostico);
   return Response.json(plano);
+}
+
+const BLOCO_PLANO = /<plano_atualizado>([\s\S]*?)<\/plano_atualizado>/;
+
+// Saneia o <plano_atualizado>: se o modelo devolveu um plano válido, re-emite-o
+// já canónico (shape garantida + valor recalculado); se veio malformado, remove
+// o bloco — a front fica só com <resposta> e nunca aplica um plano-lixo.
+function sanearRespostaChat(text: string, diagnostico: Diagnostico): string {
+  const m = text.match(BLOCO_PLANO);
+  if (!m) return text;
+  try {
+    const bruto = planoSchema.parse(JSON.parse(m[1].trim()));
+    const plano = normalizarPlano(bruto, diagnostico);
+    return text.replace(BLOCO_PLANO, `<plano_atualizado>${JSON.stringify(plano)}</plano_atualizado>`);
+  } catch {
+    // DEMO: bloco fora do contrato -> descarta a alteração (mantém só o texto).
+    return text.replace(BLOCO_PLANO, "").trim();
+  }
 }
 
 async function handleChat(diagnostico: Diagnostico, plano: Plano, mensagens: Msg[]): Promise<Response> {
@@ -105,8 +124,9 @@ async function handleChat(diagnostico: Diagnostico, plano: Plano, mensagens: Msg
     system: systemPromptChat(diagnostico, plano),
     messages: mensagens.map((m) => ({ role: m.role, content: m.content })),
     providerOptions: reasoningMinimo,
+    maxOutputTokens: 3000, // <resposta> + plano completo (12 meses) sem truncar
   });
-  return Response.json({ text });
+  return Response.json({ text: sanearRespostaChat(text, diagnostico) });
 }
 
 export default async function handler(req: Request): Promise<Response> {
