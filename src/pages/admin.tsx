@@ -113,12 +113,12 @@ const AdminPage = () => {
                       className="cursor-pointer border-b border-input/60 transition last:border-0 hover:bg-secondary/40"
                     >
                       <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">
-                        {l.data ? dataFmt.format(new Date(l.data)) : '—'}
+                        {l.data ? dataFmt.format(new Date(l.data)) : 'n/d'}
                       </td>
                       <td className="px-4 py-3 font-medium text-primary">{l.empresa}</td>
                       <td className="px-4 py-3 text-muted-foreground">{l.setor}</td>
-                      <td className="px-4 py-3 text-muted-foreground">{HEADCOUNT_CURTO[l.headcount_band] ?? '—'}</td>
-                      <td className="px-4 py-3 text-muted-foreground">{PRIORIDADE_LABEL[l.priority] ?? '—'}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{HEADCOUNT_CURTO[l.headcount_band] ?? 'n/d'}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{PRIORIDADE_LABEL[l.priority] ?? 'n/d'}</td>
                       <td className="whitespace-nowrap px-4 py-3 text-right font-semibold text-primary">{eur.format(l.valor)}</td>
                       <td className="px-4 py-3">
                         <span className="flex justify-center">

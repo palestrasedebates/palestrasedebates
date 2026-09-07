@@ -147,7 +147,7 @@ const PlanoPage = () => {
                 <p className="font-semibold text-primary">Plano anual</p>
                 <p className="mt-2 text-3xl font-extrabold text-primary">{eur.format(precos.anual)}</p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Todo o percurso num só compromisso — poupa {eur.format(precos.poupanca)}.
+                  Todo o percurso num só compromisso: poupa {eur.format(precos.poupanca)}.
                 </p>
               </div>
             </div>

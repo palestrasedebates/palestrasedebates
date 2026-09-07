@@ -43,8 +43,8 @@ const EmpresaPage = () => {
               ocupacionais, incluindo eletrocardiograma feito por telefone.
             </p>
             <p>
-              Vamos impactar e solucionar pela consciencialização os seus acidentes — onde zero
-              acidentes é o ideal —, reduzir o seu absentismo, aumentar a sua produtividade e iniciar
+              Vamos impactar e solucionar pela consciencialização os seus acidentes, onde zero
+              acidentes é o ideal, reduzir o seu absentismo, aumentar a sua produtividade e iniciar
               um novo ciclo vencedor para a sua empresa.{' '}
               <strong className="text-primary">
                 A sua dor de cabeça acabou: contrate quem vai resolver, venha com a PALESTRAS E
