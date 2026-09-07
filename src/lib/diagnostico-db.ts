@@ -101,6 +101,20 @@ export async function lerLinhasAdmin(): Promise<LinhaAdmin[] | null> {
   })
 }
 
+// DEMO: plano mais recente do banco — usado no /app quando a sessão não tem plano
+// (modo demo ou magic link novo, já que os planos do funil têm owner_id=NULL).
+export async function lerPlanoMaisRecente(): Promise<{ plano: Plano; diagnostico: Diagnostico } | null> {
+  if (!isSupabaseReady || !supabase) return null
+  const { data, error } = await supabase
+    .from('plans')
+    .select('id')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+  if (error || !data) return null
+  return lerPlano(data.id as string)
+}
+
 // DEMO: cache em sessionStorage pra /plano/:id funcionar sem Supabase (mock/local).
 export function guardarPlanoLocal(id: string, plano: Plano, diagnostico: Diagnostico) {
   try {

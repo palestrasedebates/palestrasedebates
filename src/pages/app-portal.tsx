@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { Send, LogOut, Clock, Pencil, Check, Sparkles, Loader2 } from 'lucide-react'
 import { supabase, isSupabaseReady } from '@/lib/supabase'
 import { conversar } from '@/lib/ai'
-import { lerPlanoLocal, guardarPlanoLocal } from '@/lib/diagnostico-db'
+import { lerPlanoLocal, guardarPlanoLocal, lerPlanoMaisRecente } from '@/lib/diagnostico-db'
 import { AREA_LABEL, AREA_BADGE } from '@/lib/diagnostico-labels'
 import type { Plano, Diagnostico, Area, MesDoPlano, Msg } from '@/types/diagnostico'
 
@@ -34,13 +34,27 @@ const AppPortalPage = () => {
     }
   }, [])
 
-  // Carrega o plano (modo demo: sessão local) quando entra.
+  // Carrega o plano quando entra: 1) sessão local (acabou de fazer o wizard);
+  // 2) senão, o mais recente do banco — assim o portal SEMPRE abre cheio pra
+  // demonstrar o consultor (planos do funil têm owner_id=NULL). // DEMO
   useEffect(() => {
     if (!autenticado) return
-    const dados = lerPlanoLocal('demo')
-    if (dados) {
-      setPlano(dados.plano)
-      setDiagnostico(dados.diagnostico)
+    let vivo = true
+    const local = lerPlanoLocal('demo')
+    if (local) {
+      setPlano(local.plano)
+      setDiagnostico(local.diagnostico)
+      return
+    }
+    ;(async () => {
+      const recente = await lerPlanoMaisRecente().catch(() => null)
+      if (vivo && recente) {
+        setPlano(recente.plano)
+        setDiagnostico(recente.diagnostico)
+      }
+    })()
+    return () => {
+      vivo = false
     }
   }, [autenticado])
 
