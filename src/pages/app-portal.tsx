@@ -5,7 +5,7 @@ import { Send, LogOut, Clock, Pencil, Check, Sparkles, Loader2 } from 'lucide-re
 import { supabase, isSupabaseReady } from '@/lib/supabase'
 import { conversar } from '@/lib/ai'
 import { lerPlanoLocal, guardarPlanoLocal, lerPlanoMaisRecente } from '@/lib/diagnostico-db'
-import { AREA_LABEL, AREA_BADGE } from '@/lib/diagnostico-labels'
+import { AREA_LABEL, AREA_BADGE, tituloLimpo } from '@/lib/diagnostico-labels'
 import type { Plano, Diagnostico, Area, MesDoPlano, Msg } from '@/types/diagnostico'
 
 const APP_REDIRECT = `${window.location.origin}/app`
@@ -277,7 +277,7 @@ const PlanoEditavel = ({
                 </div>
               ) : (
                 <>
-                  <h3 className="mt-2 font-bold leading-snug text-primary">{m.titulo}</h3>
+                  <h3 className="mt-2 font-bold leading-snug text-primary">{tituloLimpo(m.titulo)}</h3>
                   <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
                     <Clock className="size-3.5" /> {m.duracao_h} horas
                   </p>
@@ -369,7 +369,8 @@ const Consultor = ({
                 m.role === 'user' ? 'bg-primary text-white' : 'bg-secondary text-foreground'
               }`}
             >
-              {m.content}
+              {/* Só o consultor responde em markdown leve; a msg do utilizador é texto plano. */}
+              {m.role === 'assistant' ? <MarkdownLeve texto={m.content} /> : m.content}
             </div>
           </div>
         ))}
@@ -413,6 +414,56 @@ const Consultor = ({
       </div>
     </>
   )
+}
+
+// Render de markdown LEVE (sem dep): parágrafos, listas "- " e **negrito**.
+// Seguro (sem dangerouslySetInnerHTML). Contrato da <resposta> do consultor.
+function renderInline(texto: string, keyBase: string): React.ReactNode[] {
+  return texto.split(/(\*\*[^*]+\*\*)/g).map((parte, i) => {
+    const forte = parte.match(/^\*\*([^*]+)\*\*$/)
+    return forte ? <strong key={`${keyBase}-${i}`}>{forte[1]}</strong> : <span key={`${keyBase}-${i}`}>{parte}</span>
+  })
+}
+
+const MarkdownLeve = ({ texto }: { texto: string }) => {
+  const linhas = texto.split('\n')
+  const blocos: React.ReactNode[] = []
+  let lista: string[] = []
+  let k = 0
+
+  const flush = () => {
+    if (lista.length) {
+      const itens = lista
+      blocos.push(
+        <ul key={`ul-${k++}`} className="my-1 list-disc space-y-0.5 pl-5">
+          {itens.map((item, i) => (
+            <li key={i}>{renderInline(item, `li-${k}-${i}`)}</li>
+          ))}
+        </ul>,
+      )
+      lista = []
+    }
+  }
+
+  for (const linha of linhas) {
+    const t = linha.trim()
+    if (!t) {
+      flush()
+      continue
+    }
+    if (t.startsWith('- ') || t.startsWith('* ')) {
+      lista.push(t.slice(2))
+      continue
+    }
+    flush()
+    blocos.push(
+      <p key={`p-${k++}`} className="[&:not(:first-child)]:mt-2">
+        {renderInline(t, `p-${k}`)}
+      </p>,
+    )
+  }
+  flush()
+  return <>{blocos}</>
 }
 
 export default AppPortalPage
