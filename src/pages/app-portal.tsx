@@ -10,6 +10,14 @@ import type { Plano, Diagnostico, Area, MesDoPlano, Msg } from '@/types/diagnost
 
 const APP_REDIRECT = `${window.location.origin}/app`
 
+// Mensagens que rotam enquanto o consultor pensa (~15s do gpt-5-mini).
+const MSG_ESPERA_CHAT = [
+  'A analisar o seu pedido…',
+  'A rever o plano de formação…',
+  'A ajustar as formações…',
+  'Quase a terminar…',
+]
+
 const AppPortalPage = () => {
   const [sessaoPronta, setSessaoPronta] = useState(false)
   const [autenticado, setAutenticado] = useState(false)
@@ -301,11 +309,22 @@ const Consultor = ({
   ])
   const [texto, setTexto] = useState('')
   const [pensando, setPensando] = useState(false)
+  const [dicaEspera, setDicaEspera] = useState(0)
   const fimRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     fimRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [msgs, pensando])
+
+  // O consultor (gpt-5-mini) leva ~15s; rotaciona mensagens pra não parecer travado.
+  useEffect(() => {
+    if (!pensando) {
+      setDicaEspera(0)
+      return
+    }
+    const t = setInterval(() => setDicaEspera((i) => (i + 1) % MSG_ESPERA_CHAT.length), 2500)
+    return () => clearInterval(t)
+  }, [pensando])
 
   const enviar = async () => {
     const conteudo = texto.trim()
@@ -357,7 +376,7 @@ const Consultor = ({
           <div className="flex justify-start">
             <div className="rounded-2xl bg-secondary px-4 py-2.5 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-2">
-                <Loader2 className="size-3.5 animate-spin" /> A escrever…
+                <Loader2 className="size-3.5 animate-spin" /> {MSG_ESPERA_CHAT[dicaEspera]}
               </span>
             </div>
           </div>
@@ -377,8 +396,9 @@ const Consultor = ({
               }
             }}
             rows={1}
-            placeholder="Escreva a sua mensagem…"
-            className="max-h-32 flex-1 resize-none rounded-lg border border-input px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+            disabled={pensando}
+            placeholder={pensando ? 'O consultor está a responder…' : 'Escreva a sua mensagem…'}
+            className="max-h-32 flex-1 resize-none rounded-lg border border-input px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-secondary/50 disabled:opacity-70"
           />
           <button
             onClick={enviar}
