@@ -43,6 +43,64 @@ export async function inserirPlano(diagnosticId: string, p: Plano): Promise<stri
   return data.id as string
 }
 
+// Gate de e-mail: grava a lead. Padrão ÚNICO fixado pelo Copiloto (bate com a infra).
+export async function gravarLeadDiagnostico(email: string, empresa?: string): Promise<void> {
+  if (!isSupabaseReady || !supabase) return
+  const { error } = await supabase.from('leads').insert({
+    email,
+    name: empresa || 'Lead do plano anual', // DEMO: fallback quando não há nome de empresa
+    telefone: '000000000', // DEMO: satisfaz NOT NULL sem alterar a tabela
+    message: 'Pedido de plano completo (gate /plano/:id)', // DEMO
+    source: 'diagnostico',
+  })
+  if (error) throw error
+}
+
+// Atualiza o contacto no diagnóstico (best-effort — depende de RLS de UPDATE anon).
+export async function atualizarContactEmail(diagnosticId: string, email: string): Promise<void> {
+  if (!isSupabaseReady || !supabase) return
+  const { error } = await supabase.from('diagnostics').update({ contact_email: email }).eq('id', diagnosticId)
+  if (error) throw error
+}
+
+// Linha do painel de operação (/admin).
+export type LinhaAdmin = {
+  planId: string
+  data: string | null
+  empresa: string
+  setor: string
+  headcount_band: Diagnostico['headcount_band']
+  priority: Diagnostico['priority']
+  valor: number
+  temEmail: boolean
+}
+
+// Lê os diagnósticos+planos pro painel. null se as tabelas ainda não existem (modo demo).
+export async function lerLinhasAdmin(): Promise<LinhaAdmin[] | null> {
+  if (!isSupabaseReady || !supabase) return null
+  const { data, error } = await supabase
+    .from('plans')
+    .select('id, estimated_value, created_at, diagnostics(company_name, sector, headcount_band, priority, contact_email)')
+    .order('created_at', { ascending: false })
+  if (error || !data) return null
+
+  return data.map((row) => {
+    const r = row as Record<string, unknown>
+    const dgRaw = Array.isArray(r.diagnostics) ? r.diagnostics[0] : r.diagnostics
+    const dg = (dgRaw ?? {}) as Record<string, unknown>
+    return {
+      planId: r.id as string,
+      data: (r.created_at as string) ?? null,
+      empresa: (dg.company_name as string) || '—',
+      setor: (dg.sector as string) || '—',
+      headcount_band: dg.headcount_band as Diagnostico['headcount_band'],
+      priority: dg.priority as Diagnostico['priority'],
+      valor: Number(r.estimated_value ?? 0),
+      temEmail: Boolean(dg.contact_email),
+    }
+  })
+}
+
 // DEMO: cache em sessionStorage pra /plano/:id funcionar sem Supabase (mock/local).
 export function guardarPlanoLocal(id: string, plano: Plano, diagnostico: Diagnostico) {
   try {
