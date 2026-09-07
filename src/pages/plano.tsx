@@ -12,7 +12,7 @@ import {
   gravarLeadDiagnostico,
   atualizarContactEmail,
 } from '@/lib/diagnostico-db'
-import { AREA_LABEL, AREA_BADGE } from '@/lib/diagnostico-labels'
+import { AREA_LABEL, AREA_BADGE, tituloLimpo } from '@/lib/diagnostico-labels'
 import type { Plano, Diagnostico, Area, MesDoPlano } from '@/types/diagnostico'
 
 const eur = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })
@@ -183,7 +183,7 @@ const CardMes = ({ m }: { m: MesDoPlano }) => {
           {AREA_LABEL[area] ?? m.area}
         </span>
       </div>
-      <h3 className="mt-3 font-bold leading-snug text-primary">{m.titulo}</h3>
+      <h3 className="mt-3 font-bold leading-snug text-primary">{tituloLimpo(m.titulo)}</h3>
       <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
         <Clock className="size-4" /> {m.duracao_h} horas
       </p>
