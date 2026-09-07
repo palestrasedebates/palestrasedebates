@@ -9,6 +9,11 @@ const EmpresaPage = lazy(() => import('@/pages/empresa'))
 const PalestrasPage = lazy(() => import('@/pages/palestras'))
 const ContatoPage = lazy(() => import('@/pages/contato'))
 const NotFoundPage = lazy(() => import('@/pages/not-found'))
+// DEMO: rotas SaaS+IA (fora do SiteLayout — cara de produto)
+const DiagnosticoPage = lazy(() => import('@/pages/diagnostico'))
+const PlanoPage = lazy(() => import('@/pages/plano'))
+const AppPortalPage = lazy(() => import('@/pages/app-portal'))
+const AdminPage = lazy(() => import('@/pages/admin'))
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,8 +40,14 @@ const App = () => {
               <Route path="/empresa" element={<EmpresaPage />} />
               <Route path="/palestras" element={<PalestrasPage />} />
               <Route path="/contato" element={<ContatoPage />} />
+              {/* DEMO: funil pré-login dentro do layout institucional (marca converte melhor o gate) */}
+              <Route path="/diagnostico" element={<DiagnosticoPage />} />
+              <Route path="/plano/:id" element={<PlanoPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
+            {/* DEMO: shell próprio de produto, fora do SiteLayout */}
+            <Route path="/app" element={<AppPortalPage />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
