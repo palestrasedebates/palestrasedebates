@@ -127,7 +127,7 @@ const AppPortalPage = () => {
       {/* Barra de produto */}
       <header className="flex shrink-0 items-center justify-between border-b border-input bg-white px-6 py-3">
         <div className="flex items-center gap-2">
-          <img src="/img/logo.png" alt="Palestras e Debates" className="h-8 w-auto" />
+          <img src="/img/logo.png" alt="Palestras e Debates" className="h-8 w-auto max-w-full shrink-0 object-contain" />
           <span className="text-sm font-semibold text-primary">Portal do cliente</span>
         </div>
         <button onClick={sair} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary">
@@ -176,7 +176,7 @@ const Login = ({
 }) => (
   <div className="grid min-h-screen place-items-center bg-secondary p-6">
     <div className="w-full max-w-md rounded-2xl border border-input bg-white p-8 shadow-lg">
-      <img src="/img/logo.png" alt="Palestras e Debates" className="mx-auto h-10 w-auto" />
+      <img src="/img/logo.png" alt="Palestras e Debates" className="mx-auto h-10 w-auto max-w-full object-contain" />
       <h1 className="mt-6 text-center text-xl font-bold text-primary">Aceder ao portal</h1>
       <p className="mt-2 text-center text-sm text-muted-foreground">
         Enviamos-lhe um link seguro por e-mail. Sem palavra-passe.

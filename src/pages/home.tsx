@@ -54,7 +54,7 @@ const HomePage = () => {
       {/* Sobre */}
       <section className="py-16">
         <div className="container grid items-center gap-10 lg:grid-cols-2">
-          <img src="/img/logo.png" alt="Palestras e Debates" className="mx-auto h-40 w-auto" />
+          <img src="/img/logo.png" alt="Palestras e Debates" className="mx-auto h-40 w-auto max-w-full object-contain" />
           <div>
             <h3 className="section-title">Rapidez e excelência no serviço!</h3>
             <p className="mt-4 leading-relaxed text-muted-foreground">
@@ -125,7 +125,7 @@ const HomePage = () => {
         className="cursor-pointer bg-primary py-14 text-white outline-none transition hover:brightness-110 focus-visible:ring-2 focus-visible:ring-accent"
       >
         <div className="container flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
-          <img src="/img/logodrwilsonpeq.png" alt="Dr. Wilson AI" className="h-24 w-auto" />
+          <img src="/img/logodrwilsonpeq.png" alt="Dr. Wilson AI" className="h-24 w-auto max-w-full object-contain" />
           <div className="flex-1">
             <p className="text-lg font-semibold">
               Fale comigo. Sou o Dr. Wilson AI, a primeira inteligência artificial de saúde com
@@ -208,7 +208,7 @@ const HomePage = () => {
       {/* Projeto cofinanciado pelo PRR — obrigatório pelas regras de financiamento */}
       <section className="border-t bg-white py-14">
         <div className="container max-w-3xl text-center">
-          <img src="/img/logoppr.png" alt="Recuperar Portugal — PRR" className="mx-auto h-12 w-auto sm:h-14" />
+          <img src="/img/logoppr.png" alt="Recuperar Portugal — PRR" className="mx-auto h-12 w-auto max-w-full object-contain sm:h-14" />
           <h3 className="mt-6 text-xl font-extrabold uppercase text-primary sm:text-2xl">
             Projeto Cofinanciado pelo PRR
           </h3>

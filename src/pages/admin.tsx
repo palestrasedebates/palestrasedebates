@@ -56,7 +56,7 @@ const AdminPage = () => {
       <header className="border-b border-input bg-white px-6 py-4">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/img/logo.png" alt="Palestras e Debates" className="h-8 w-auto" />
+            <img src="/img/logo.png" alt="Palestras e Debates" className="h-8 w-auto max-w-full shrink-0 object-contain" />
             <span className="text-sm font-semibold text-primary">Operação · Diagnósticos</span>
           </div>
           {demo && (
