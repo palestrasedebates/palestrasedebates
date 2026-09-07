@@ -25,24 +25,47 @@ export function gerarPlano(diagnostico: Diagnostico): Promise<Plano> {
   return postAI<Plano>({ mode: 'plan', diagnostico })
 }
 
-// mode:"chat" → { resposta, plano_atualizado? }
-export function conversar(
+// mode:"chat" → o servidor devolve { text: "<resposta>…</resposta>\n<plano_atualizado>{json}</plano_atualizado>" }
+// (o servidor já saneia/canoniza o <plano_atualizado>). Aqui parseamos o envelope.
+const RE_RESPOSTA = /<resposta>([\s\S]*?)<\/resposta>/
+const RE_PLANO = /<plano_atualizado>([\s\S]*?)<\/plano_atualizado>/
+
+export function parseEnvelopeChat(text: string): { resposta: string; plano_atualizado?: Plano } {
+  let plano_atualizado: Plano | undefined
+  const mPlano = text.match(RE_PLANO)
+  if (mPlano) {
+    try {
+      plano_atualizado = JSON.parse(mPlano[1].trim()) as Plano
+    } catch {
+      /* servidor devia entregar JSON válido; se não, ignora a alteração */
+    }
+  }
+  const mResp = text.match(RE_RESPOSTA)
+  const resposta = mResp
+    ? mResp[1].trim()
+    : // sem envelope <resposta>: usa o texto todo, tirando o bloco do plano e tags soltas
+      text.replace(RE_PLANO, '').replace(/<\/?resposta>/g, '').trim()
+  return { resposta, plano_atualizado }
+}
+
+export async function conversar(
   diagnostico: Diagnostico,
   plano: Plano,
   mensagens: Msg[],
 ): Promise<{ resposta: string; plano_atualizado?: Plano }> {
   if (MOCK_AI) {
     const ultima = mensagens[mensagens.length - 1]?.content ?? ''
-    return Promise.resolve({
+    return {
       resposta: `Boa questão. Com base no seu perfil (${diagnostico.sector}), sugiro manter o foco nas obrigações legais nos primeiros meses. Sobre "${ultima.slice(0, 60)}": posso ajustar o plano se preferir dar prioridade a outra área.`,
-    })
+    }
   }
-  return postAI<{ resposta: string; plano_atualizado?: Plano }>({
+  const { text } = await postAI<{ text: string }>({
     mode: 'chat',
     diagnostico,
     plano,
     mensagens,
   })
+  return parseEnvelopeChat(text)
 }
 
 // DEMO: plano fabricado de 12 meses no mesmo formato do endpoint real.
