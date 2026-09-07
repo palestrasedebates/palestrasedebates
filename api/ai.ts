@@ -15,11 +15,15 @@ import type { Diagnostico, Plano, MesDoPlano, Msg, Area } from "../src/types/dia
 export const config = { runtime: "edge" };
 
 // DEMO: provider fixado em OpenAI. AI_PROVIDER fica lido para ser trocável no futuro.
-const AI_MODEL = process.env.AI_MODEL ?? "gpt-5-nano";
+// Modelo por-modo: plan é bem servido pelo nano (barato); chat usa um tier acima
+// (mini) para melhor fidelidade na alteração do plano. Ambos com fallback a AI_MODEL.
+const AI_MODEL_PLAN = process.env.AI_MODEL_PLAN ?? process.env.AI_MODEL ?? "gpt-5-nano";
+const AI_MODEL_CHAT = process.env.AI_MODEL_CHAT ?? process.env.AI_MODEL ?? "gpt-5-nano";
 
 const openai = createOpenAI({ apiKey: process.env.AI_API_KEY });
-// gpt-5-nano é reasoning -> Responses API + reasoning effort mínimo (rápido).
-const model = openai.responses(AI_MODEL);
+// Família gpt-5 é reasoning -> Responses API + reasoning effort mínimo (rápido).
+const modelPlan = openai.responses(AI_MODEL_PLAN);
+const modelChat = openai.responses(AI_MODEL_CHAT);
 const reasoningMinimo = { openai: { reasoningEffort: "minimal" as const } };
 
 const mesSchema = z.object({
@@ -88,7 +92,7 @@ function normalizarPlano(bruto: z.infer<typeof planoSchema>, diagnostico: Diagno
 
 async function handlePlan(diagnostico: Diagnostico): Promise<Response> {
   const { object } = await generateObject({
-    model,
+    model: modelPlan,
     schema: planoSchema,
     system: systemPromptPlano(),
     prompt: `Diagnóstico da empresa (JSON):\n${JSON.stringify(diagnostico)}`,
@@ -120,7 +124,7 @@ function sanearRespostaChat(text: string, diagnostico: Diagnostico): string {
 async function handleChat(diagnostico: Diagnostico, plano: Plano, mensagens: Msg[]): Promise<Response> {
   // DEMO: sem streaming (generateText). Streaming é upgrade opcional no fim.
   const { text } = await generateText({
-    model,
+    model: modelChat,
     system: systemPromptChat(diagnostico, plano),
     messages: mensagens.map((m) => ({ role: m.role, content: m.content })),
     providerOptions: reasoningMinimo,
