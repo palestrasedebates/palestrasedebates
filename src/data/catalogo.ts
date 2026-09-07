@@ -4,7 +4,9 @@
 // DEMO: duracao_h e obrigatorio_legal foram estimados de forma plausível (não vêm do site).
 //       Rever com o catálogo real e a base legal PT antes de produção.
 
-import type { ItemCatalogo } from "@/types/diagnostico";
+// Import relativo (não alias @/) porque este ficheiro é puxado pela função edge /api,
+// empacotada pela Vercel sem o path alias do tsconfig.app.
+import type { ItemCatalogo } from "../types/diagnostico";
 
 export const CATALOGO: ItemCatalogo[] = [
   // ——— Saúde ———
