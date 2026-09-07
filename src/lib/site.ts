@@ -21,5 +21,6 @@ export const NAV = [
   { label: 'Empresa', to: '/empresa' },
   { label: 'Palestras', to: '/palestras' },
   { label: 'Serviços', to: '/#servicos' },
+  { label: 'Diagnóstico', to: '/diagnostico' },
   { label: 'Contacto', to: '/contato' },
 ] as const
