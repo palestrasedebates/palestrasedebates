@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^4.0.60",
     "@hookform/resolvers": "^5.9.1",
     "@supabase/supabase-js": "^2.104.1",
     "@tanstack/react-query": "^5.99.1",
+    "ai": "^7.0.93",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-autoplay": "^8.6.0",
