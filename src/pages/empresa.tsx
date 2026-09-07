@@ -27,7 +27,7 @@ const EmpresaPage = () => {
 
       <section className="py-16">
         <div className="container max-w-4xl">
-          <img src="/img/logo.png" alt="Palestras e Debates" className="mx-auto mb-10 h-32 w-auto" />
+          <img src="/img/logo.png" alt="Palestras e Debates" className="mx-auto mb-10 h-32 w-auto max-w-full object-contain" />
           <div className="space-y-5 leading-relaxed text-muted-foreground">
             <p>
               Nós da PALESTRAS E DEBATES chegámos para uma nova jornada em Portugal! Uma empresa

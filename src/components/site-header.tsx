@@ -31,7 +31,7 @@ export const SiteHeader = () => {
       {/* Main nav */}
       <div className="container flex h-20 items-center justify-between">
         <Link to="/" className="flex items-center" aria-label="Palestras e Debates — início">
-          <img src="/img/logo.png" alt="Palestras e Debates" className="h-12 w-auto" />
+          <img src="/img/logo.png" alt="Palestras e Debates" className="h-12 w-auto max-w-full shrink-0 object-contain" />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
