@@ -55,7 +55,7 @@ export const SERVICOS: Servico[] = [
   {
     img: '/img/servicos_sipat.jpg',
     title: 'SIPAT e Eventos',
-    text: 'Palestras, palestras-espetáculo, teatros, sketches e intervenções nos setores. Ainda, ginástica laboral, aula de zumba e check up de saúde. Produção da sua convenção corporativa — deixe tudo com a nossa equipa e fique em paz.',
+    text: 'Palestras, palestras-espetáculo, teatros, sketches e intervenções nos setores. Ainda, ginástica laboral, aula de zumba e check up de saúde. Produção da sua convenção corporativa: deixe tudo com a nossa equipa e fique em paz.',
   },
   {
     img: '/img/servicos_palestras.jpg',
@@ -120,7 +120,7 @@ export type CategoriaPalestra = {
 export const CATEGORIAS_PALESTRAS: CategoriaPalestra[] = [
   {
     key: 'saude',
-    title: 'Palestras — Saúde',
+    title: 'Palestras: Saúde',
     desc: 'Conheça todo o nosso rol de palestras voltadas à SAÚDE (física e mental)!',
     imgs: ['/img/palestras/014.jpg', '/img/palestras/012.jpg', '/img/palestras/008.jpg', '/img/palestras/013.jpg', '/img/palestras/011.jpg'],
     destaques: [
@@ -128,7 +128,7 @@ export const CATEGORIAS_PALESTRAS: CategoriaPalestra[] = [
       'Saúde mental e emocional',
       'Vai continuar a brincar? As Infecções Sexualmente Transmissíveis, NÃO!',
       'Quebrando paradigmas, saúde do HOMEM em foco!',
-      'A saúde da MULHER moderna — viva e seja FELIZ!',
+      'A saúde da MULHER moderna: viva e seja FELIZ!',
     ],
     temas: [
       'Combate ao assédio',
@@ -146,13 +146,13 @@ export const CATEGORIAS_PALESTRAS: CategoriaPalestra[] = [
   },
   {
     key: 'seguranca',
-    title: 'Palestras — Segurança do Trabalho',
+    title: 'Palestras: Segurança do Trabalho',
     desc: 'Conheça todo o nosso rol de palestras voltadas à SEGURANÇA DO TRABALHO!',
     imgs: ['/img/palestras/002.jpg', '/img/palestras/004.jpg', '/img/palestras/001.jpg'],
     destaques: [
-      'Meio ambiente, ética e assertividade na SEGURANÇA DO TRABALHO — a sua vida num segundo!',
-      'Comportamento seguro em 1º lugar — a sua FAMÍLIA quer-o de volta!',
-      'MÃO, PANO e ÁGUA — Primeiros Socorros sem mimimi!',
+      'Meio ambiente, ética e assertividade na SEGURANÇA DO TRABALHO: a sua vida num segundo!',
+      'Comportamento seguro em 1º lugar: a sua FAMÍLIA quer-o de volta!',
+      'MÃO, PANO e ÁGUA: Primeiros Socorros sem mimimi!',
     ],
     temas: [
       'Primeiros socorros',
@@ -168,7 +168,7 @@ export const CATEGORIAS_PALESTRAS: CategoriaPalestra[] = [
   },
   {
     key: 'gestao',
-    title: 'Palestras — Gestão e Comportamento de Equipas',
+    title: 'Palestras: Gestão e Comportamento de Equipas',
     desc: 'Conheça as palestras com temas de COMPORTAMENTO e GESTÃO de equipas!',
     imgs: ['/img/palestras/003.jpg', '/img/palestras/006.jpg', '/img/palestras/005.jpg', '/img/palestras/009.jpg'],
     destaques: [
@@ -195,7 +195,7 @@ export const CATEGORIAS_PALESTRAS: CategoriaPalestra[] = [
 
 export const PALESTRAS_ESPECIAIS = [
   {
-    title: 'Palestras interativas — On Time',
+    title: 'Palestras interativas: On Time',
     img: '/img/palestras/017.jpg',
     text: 'Utilizamos tecnologia para promover interatividade em tempo real entre os participantes.',
   },
@@ -212,7 +212,7 @@ export const PALESTRAS_ESPECIAIS = [
   {
     title: 'Intervenções nos setores',
     img: '/img/palestras/010.jpg',
-    text: 'Abordagem direta no chão de fábrica e nos setores — muito eficaz!',
+    text: 'Abordagem direta no chão de fábrica e nos setores: muito eficaz!',
   },
   {
     title: 'Palestras e cursos via webconferência',

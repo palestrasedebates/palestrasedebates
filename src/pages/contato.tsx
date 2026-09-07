@@ -61,7 +61,7 @@ const ContatoPage = () => {
             Utilize os telefones, e-mails, redes sociais, mapas ou o formulário abaixo para nos{' '}
             <strong className="text-primary">contactar</strong> ou{' '}
             <strong className="text-primary">solicitar o seu orçamento</strong>. Será uma satisfação
-            atender a todas as suas necessidades e, juntos, conquistarmos mais vitórias —
+            atender a todas as suas necessidades e, juntos, conquistarmos mais vitórias,
             capacitando e influenciando de forma <strong className="text-primary">Divertida,
             Diferente e Dinâmica</strong>, o nosso método 3D.
           </p>
