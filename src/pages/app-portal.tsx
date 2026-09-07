@@ -5,7 +5,7 @@ import { Send, LogOut, Clock, Pencil, Check, Sparkles, Loader2 } from 'lucide-re
 import { supabase, isSupabaseReady } from '@/lib/supabase'
 import { conversar } from '@/lib/ai'
 import { lerPlanoLocal, guardarPlanoLocal, lerPlanoMaisRecente } from '@/lib/diagnostico-db'
-import { AREA_LABEL, AREA_BADGE } from '@/lib/diagnostico-labels'
+import { AREA_LABEL, AREA_BADGE, tituloLimpo } from '@/lib/diagnostico-labels'
 import type { Plano, Diagnostico, Area, MesDoPlano, Msg } from '@/types/diagnostico'
 
 const APP_REDIRECT = `${window.location.origin}/app`
@@ -277,7 +277,7 @@ const PlanoEditavel = ({
                 </div>
               ) : (
                 <>
-                  <h3 className="mt-2 font-bold leading-snug text-primary">{m.titulo}</h3>
+                  <h3 className="mt-2 font-bold leading-snug text-primary">{tituloLimpo(m.titulo)}</h3>
                   <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
                     <Clock className="size-3.5" /> {m.duracao_h} horas
                   </p>

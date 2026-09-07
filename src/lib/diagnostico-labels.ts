@@ -1,6 +1,12 @@
 // Rótulos PT-PT e opções do funil de diagnóstico. Partilhado wizard/plano/admin.
 import type { Area, HeadcountBand, Priority } from '@/types/diagnostico'
 
+// Sanitiza travessão (—/–) na EXIBIÇÃO dos títulos das formações — o dado (catálogo/
+// jsonb) fica intacto. Ex: "Uso de EPI e EPC — cuidado" → "Uso de EPI e EPC: cuidado".
+export function tituloLimpo(titulo: string): string {
+  return titulo.replace(/\s*[—–]\s*/g, ': ')
+}
+
 export const HEADCOUNT_OPCOES: { value: HeadcountBand; label: string }[] = [
   { value: 'ate_10', label: 'Até 10 colaboradores' },
   { value: '11_50', label: '11 a 50 colaboradores' },
