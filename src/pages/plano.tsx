@@ -48,10 +48,12 @@ const PlanoPage = () => {
     }
   }, [id])
 
-  const anual = useMemo(() => {
-    const avulso = plano?.valor_estimado ?? 0
-    const comDesconto = Math.round(avulso * 0.8)
-    return { avulso, comDesconto, poupanca: avulso - comDesconto }
+  // estimated_value (valor_estimado) JÁ É o valor anual com desconto (o servidor calcula
+  // avulso × 0,8). Reconstruímos o avulso a partir dele — não aplicar -20% de novo.
+  const precos = useMemo(() => {
+    const anual = plano?.valor_estimado ?? 0
+    const avulso = Math.round(anual / 0.8)
+    return { anual, avulso, poupanca: avulso - anual }
   }, [plano])
 
   if (carregando) {
@@ -134,7 +136,7 @@ const PlanoPage = () => {
               {/* Avulso */}
               <div className="rounded-xl border border-input bg-white p-7">
                 <p className="font-semibold text-primary">Formações avulsas</p>
-                <p className="mt-2 text-3xl font-extrabold text-primary">{eur.format(anual.avulso)}</p>
+                <p className="mt-2 text-3xl font-extrabold text-primary">{eur.format(precos.avulso)}</p>
                 <p className="mt-1 text-sm text-muted-foreground">Contratadas uma a uma, ao longo do ano.</p>
               </div>
               {/* Anual */}
@@ -143,9 +145,9 @@ const PlanoPage = () => {
                   Poupa 20%
                 </span>
                 <p className="font-semibold text-primary">Plano anual</p>
-                <p className="mt-2 text-3xl font-extrabold text-primary">{eur.format(anual.comDesconto)}</p>
+                <p className="mt-2 text-3xl font-extrabold text-primary">{eur.format(precos.anual)}</p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Todo o percurso num só compromisso — poupa {eur.format(anual.poupanca)}.
+                  Todo o percurso num só compromisso — poupa {eur.format(precos.poupanca)}.
                 </p>
               </div>
             </div>
