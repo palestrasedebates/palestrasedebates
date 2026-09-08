@@ -27,6 +27,9 @@ const schema = z.object({
     message: 'Escolha a dimensão da equipa',
   }),
   risks: z.array(z.string()).min(1, 'Selecione pelo menos um risco'),
+  // Áreas de gestão + "Outros" (opcionais). Vão para o mesmo array risks no submit. // DEMO
+  areas: z.array(z.string()).optional(),
+  outros_texto: z.string().optional(),
   last_actions: z.string().optional(),
   priority: z.enum(
     ['obrigacoes_legais', 'clima_motivacao', 'reducao_acidentes', 'lideranca_gestao'],
@@ -42,10 +45,14 @@ const PASSOS: { titulo: string; subtitulo: string; campos: (keyof FormValues)[] 
   { titulo: 'A sua empresa', subtitulo: 'Comecemos pelo essencial.', campos: ['company_name', 'sector'] },
   { titulo: 'Dimensão da equipa', subtitulo: 'Quantos colaboradores tem?', campos: ['headcount_band'] },
   { titulo: 'Riscos presentes', subtitulo: 'Selecione os que se aplicam à sua atividade.', campos: ['risks'] },
+  { titulo: 'Áreas a desenvolver', subtitulo: 'Que áreas de gestão quer reforçar este ano? (opcional)', campos: [] },
   { titulo: 'Formação recente', subtitulo: 'O que já fizeram nos últimos 12 meses? (opcional)', campos: [] },
   { titulo: 'A sua prioridade', subtitulo: 'O que é mais importante para si este ano?', campos: ['priority'] },
   { titulo: 'Orçamento previsto', subtitulo: 'Ajuda-nos a ajustar a proposta.', campos: ['budget_band'] },
 ]
+
+// Áreas de gestão (não são riscos físicos). "Outros" revela campo de texto livre.
+const AREAS_GESTAO = ['Conselho estratégico', 'Liderança', 'Governança', 'Vendas']
 
 const MSG_ESPERA = [
   'A cruzar o seu perfil com 40 formações do catálogo…',
@@ -68,7 +75,7 @@ const DiagnosticoPage = () => {
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { risks: [], last_actions: '', budget_band: '' },
+    defaultValues: { risks: [], areas: [], outros_texto: '', last_actions: '', budget_band: '' },
     mode: 'onTouched',
   })
 
@@ -94,7 +101,13 @@ const DiagnosticoPage = () => {
     setGerando(true)
     const parar = rodarEspera()
     try {
-      const diagnostico: Diagnostico = { ...values }
+      // DEMO: áreas de gestão + "Outros: <texto>" entram no MESMO array risks (sem
+      // migration nem mudar o contrato). A IA já usa risks no prompt do plano.
+      const { areas = [], outros_texto, ...resto } = values
+      const temOutros = areas.includes('Outros')
+      const extras = areas.filter((a) => a !== 'Outros')
+      if (temOutros) extras.push(outros_texto?.trim() ? `Outros: ${outros_texto.trim()}` : 'Outros')
+      const diagnostico: Diagnostico = { ...resto, risks: [...resto.risks, ...extras] }
 
       // DEMO: persistência tolerante — enquanto a migration (diagnostics/plans) não
       // existe, o insert falha e caímos no modo local (sessionStorage) sem quebrar o
@@ -234,8 +247,56 @@ const DiagnosticoPage = () => {
             />
           )}
 
-          {/* Passo 4 — ações recentes */}
+          {/* Passo 4 — áreas de gestão + Outros */}
           {passo === 3 && (
+            <Controller
+              control={control}
+              name="areas"
+              render={({ field }) => {
+                const temOutros = field.value?.includes('Outros')
+                const toggle = (a: string) =>
+                  field.onChange(
+                    field.value?.includes(a)
+                      ? field.value.filter((x) => x !== a)
+                      : [...(field.value ?? []), a],
+                  )
+                return (
+                  <Campo label="" erro={undefined}>
+                    <div className="flex flex-wrap gap-2">
+                      {[...AREAS_GESTAO, 'Outros'].map((a) => {
+                        const ativo = field.value?.includes(a)
+                        return (
+                          <button
+                            type="button"
+                            key={a}
+                            onClick={() => toggle(a)}
+                            className={`rounded-full border px-4 py-2 text-sm transition ${
+                              ativo
+                                ? 'border-accent bg-accent text-white'
+                                : 'border-input bg-white text-foreground hover:border-accent'
+                            }`}
+                          >
+                            {a}
+                          </button>
+                        )
+                      })}
+                    </div>
+                    {temOutros && (
+                      <textarea
+                        {...register('outros_texto')}
+                        rows={2}
+                        placeholder="Descreva a área ou o tema que gostaria de desenvolver…"
+                        className={`${inputCls} mt-3`}
+                      />
+                    )}
+                  </Campo>
+                )
+              }}
+            />
+          )}
+
+          {/* Passo 5 — ações recentes */}
+          {passo === 4 && (
             <Campo label="Formações já realizadas" erro={undefined}>
               <textarea
                 {...register('last_actions')}
@@ -246,8 +307,8 @@ const DiagnosticoPage = () => {
             </Campo>
           )}
 
-          {/* Passo 5 — prioridade */}
-          {passo === 4 && (
+          {/* Passo 6 — prioridade */}
+          {passo === 5 && (
             <Controller
               control={control}
               name="priority"
@@ -269,8 +330,8 @@ const DiagnosticoPage = () => {
             />
           )}
 
-          {/* Passo 6 — orçamento */}
-          {passo === 5 && (
+          {/* Passo 7 — orçamento */}
+          {passo === 6 && (
             <Controller
               control={control}
               name="budget_band"

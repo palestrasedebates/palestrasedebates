@@ -33,7 +33,7 @@ export const SiteFooter = () => {
           <ul className="space-y-3 text-sm text-white/80">
             <li className="flex items-start gap-2">
               <Phone className="mt-0.5 size-4 shrink-0 text-accent" />
-              <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="hover:text-accent">{SITE.phone}</a>
+              <a href={`tel:+${SITE.phoneRaw}`} className="hover:text-accent">{SITE.phone}</a>
             </li>
             <li className="flex items-start gap-2">
               <Mail className="mt-0.5 size-4 shrink-0 text-accent" />

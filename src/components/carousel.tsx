@@ -85,7 +85,9 @@ export const Carousel = ({
       )}
 
       {showDots && snaps.length > 1 && (
-        <div className="mt-4 flex justify-center gap-2">
+        // Dots DENTRO do hero (base da imagem), com sombra pra contraste sobre a foto —
+        // elimina a faixa branca solta entre o carrossel e a próxima secção.
+        <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center gap-2 [&>button]:shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
           {snaps.map((_, i) => (
             <button
               key={i}
@@ -94,7 +96,7 @@ export const Carousel = ({
               onClick={() => emblaApi?.scrollTo(i)}
               className={cn(
                 'h-2.5 rounded-full transition-all',
-                i === selected ? 'w-6 bg-accent' : 'w-2.5 bg-primary/30',
+                i === selected ? 'w-6 bg-accent' : 'w-2.5 bg-white/70 hover:bg-white',
               )}
             />
           ))}

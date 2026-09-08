@@ -14,7 +14,7 @@ export const SiteHeader = () => {
       {/* Top bar */}
       <div className="hidden bg-primary text-white md:block">
         <div className="container flex h-9 items-center justify-between text-xs">
-          <a href={SITE.whatsapp} className="flex items-center gap-2 hover:text-accent" target="_blank" rel="noreferrer">
+          <a href={`tel:+${SITE.phoneRaw}`} className="flex items-center gap-2 hover:text-accent">
             <Phone className="size-3.5" /> {SITE.phone}
           </a>
           <div className="flex items-center gap-4">

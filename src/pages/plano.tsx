@@ -28,6 +28,7 @@ const PlanoPage = () => {
   const [plano, setPlano] = useState<Plano | null>(null)
   const [diagnostico, setDiagnostico] = useState<Diagnostico | null>(null)
   const [desbloqueado, setDesbloqueado] = useState(false)
+  const [opcao, setOpcao] = useState<'avulso' | 'anual'>('anual') // anual por padrão (empurrão)
 
   useEffect(() => {
     let vivo = true
@@ -132,30 +133,65 @@ const PlanoPage = () => {
         {desbloqueado && (
           <div className="mt-14">
             <h2 className="section-title text-center">Como quer avançar?</h2>
-            <div className="mt-8 grid gap-6 md:grid-cols-2">
-              {/* Avulso */}
-              <div className="rounded-xl border border-input bg-white p-7">
+            <div className="mt-8 grid gap-6 md:grid-cols-2" role="radiogroup" aria-label="Como quer avançar">
+              {/* Avulso — card inteiro selecionável */}
+              <button
+                type="button"
+                role="radio"
+                aria-checked={opcao === 'avulso'}
+                onClick={() => setOpcao('avulso')}
+                className={`relative rounded-xl border p-7 text-left transition ${
+                  opcao === 'avulso'
+                    ? 'border-2 border-accent bg-accent/5 ring-2 ring-accent'
+                    : 'border-input bg-white hover:border-accent'
+                }`}
+              >
+                {opcao === 'avulso' && (
+                  <span className="absolute right-4 top-4 grid size-6 place-items-center rounded-full bg-accent text-white">
+                    <Check className="size-4" />
+                  </span>
+                )}
                 <p className="font-semibold text-primary">Formações avulsas</p>
                 <p className="mt-2 text-3xl font-extrabold text-primary">{eur.format(precos.avulso)}</p>
                 <p className="mt-1 text-sm text-muted-foreground">Contratadas uma a uma, ao longo do ano.</p>
-              </div>
-              {/* Anual */}
-              <div className="relative rounded-xl border-2 border-accent bg-accent/5 p-7">
+              </button>
+              {/* Anual — card inteiro selecionável (selecionado por padrão) */}
+              <button
+                type="button"
+                role="radio"
+                aria-checked={opcao === 'anual'}
+                onClick={() => setOpcao('anual')}
+                className={`relative rounded-xl border p-7 text-left transition ${
+                  opcao === 'anual'
+                    ? 'border-2 border-accent bg-accent/5 ring-2 ring-accent'
+                    : 'border-input bg-white hover:border-accent'
+                }`}
+              >
                 <span className="absolute -top-3 left-7 rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase text-white">
                   Poupa 20%
                 </span>
+                {opcao === 'anual' && (
+                  <span className="absolute right-4 top-4 grid size-6 place-items-center rounded-full bg-accent text-white">
+                    <Check className="size-4" />
+                  </span>
+                )}
                 <p className="font-semibold text-primary">Plano anual</p>
                 <p className="mt-2 text-3xl font-extrabold text-primary">{eur.format(precos.anual)}</p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   Todo o percurso num só compromisso: poupa {eur.format(precos.poupanca)}.
                 </p>
-              </div>
+              </button>
             </div>
 
             <div className="mt-8 rounded-xl bg-primary p-8 text-center text-white">
               <h3 className="text-xl font-bold">Gerir este plano com o seu consultor</h3>
               <p className="mx-auto mt-2 max-w-xl text-white/80">
                 Crie a sua conta para acompanhar o plano, ajustar formações e falar com o consultor virtual sempre que precisar.
+              </p>
+              <p className="mt-4 text-sm text-white/90">
+                Opção escolhida:{' '}
+                <strong>{opcao === 'anual' ? 'Plano anual' : 'Formações avulsas'}</strong>{' '}
+                ({eur.format(opcao === 'anual' ? precos.anual : precos.avulso)})
               </p>
               <button
                 onClick={() => navigate('/app')}
