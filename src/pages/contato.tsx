@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { toast } from 'sonner'
-import { Phone, Mail, MapPin } from 'lucide-react'
+import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react'
 import { InstagramIcon, FacebookIcon } from '@/components/social-icons'
 import { PageHero } from '@/components/page-hero'
 import { SITE } from '@/lib/site'
@@ -79,8 +79,17 @@ const ContatoPage = () => {
                   <Phone className="size-5" />
                 </span>
                 <div>
-                  <p className="font-bold text-primary">Telefone / WhatsApp</p>
-                  <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-accent">{SITE.phone}</a>
+                  <p className="font-bold text-primary">Telefone</p>
+                  <a href={`tel:+${SITE.phoneRaw}`} className="text-muted-foreground hover:text-accent">{SITE.phone}</a>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-primary text-white">
+                  <MessageCircle className="size-5" />
+                </span>
+                <div>
+                  <p className="font-bold text-primary">WhatsApp</p>
+                  <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-accent">Falar no WhatsApp</a>
                 </div>
               </li>
               <li className="flex items-start gap-3">

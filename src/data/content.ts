@@ -18,7 +18,7 @@ export const HERO_SLIDES: Slide[] = [
     title: 'Palestras e workshops!',
     subtitle:
       'Sobre LIDERANÇA INSPIRADORA, MENTALIDADE VENCEDORA e INTELIGÊNCIA PRODUTIVA',
-    cta: { label: 'Chama aqui no Zap!', href: 'https://wa.me/351920372198' },
+    cta: { label: 'Chama aqui no Zap!', href: 'https://wa.me/5541988904213' },
   },
   {
     img: '/img/02.jpg',
